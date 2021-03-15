@@ -14,8 +14,9 @@ public class Main {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
 //            telegramBotsApi.registerBot(new CurrencyBot());
-//            telegramBotsApi.registerBot(new NewBot());
-            telegramBotsApi.registerBot(new GameBot());
+            telegramBotsApi.registerBot(new NewBot());
+//            telegramBotsApi.registerBot(new GameBot());
+            System.out.println("app is running");
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }

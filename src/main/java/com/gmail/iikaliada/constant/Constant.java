@@ -4,6 +4,7 @@ public class Constant {
     public static final String SLASH = "/";
     public static final String START = "/start";
     public static final String GET_HELP = "/help";
+    public static final String CLEAR = "/clear";
     public static final String PLAY_GAME = "get_play_game";
     public static final String PLAY_DICE = "get_play_dice";
     public static final String PLAY_DARTS = "get_play_darts";
