@@ -11,7 +11,6 @@ public class CleanerHandler {
     }
 
     public DeleteMessage clear(String messageId) {
-        System.out.println(input.getChat().getId());
         DeleteMessage deleteMessage = new DeleteMessage();
         deleteMessage.setChatId(input.getChatId().toString());
         deleteMessage.setMessageId(Integer.parseInt(messageId));

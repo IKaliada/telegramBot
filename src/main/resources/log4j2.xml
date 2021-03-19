@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration status="info">
+    <appenders>
+        <console name="console" target="SYSTEM_OUT">
+            <PatternLayout disableAnsi="false"
+                           pattern="%highlight{%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L}{FATAL=white, ERROR=red, WARN=yellow, INFO=blue, DEBUG=green, TRACE=black} - %msg%n"/>
+        </console>
+        <rollingFile name="rollingFile" filename="logs/application.log"
+                     filePattern="logs/application.log">
+            <patternLayout pattern="%d{YYYY-MM-dd HH:mm:ss} [%t] %-5p %c{1}:%L - %msg%n"/>
+            <policies>
+                <sizeBasedTriggeringPolicy size="10 MB"/>
+            </policies>
+            <defaultRolloverStrategy max="20"/>
+        </rollingFile>
+    </appenders>
+    <loggers>
+        <root level="info">
+            <appenderRef ref="console"/>
+            <appenderRef ref="rollingFile"/>
+        </root>
+    </loggers>
+</configuration>

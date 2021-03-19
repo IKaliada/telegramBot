@@ -1,7 +1,6 @@
 package com.gmail.iikaliada.handler;
 
 import com.gmail.iikaliada.PropUtil;
-import com.gmail.iikaliada.constant.Constant;
 import com.gmail.iikaliada.util.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -42,28 +41,21 @@ public class CurrencyHandler {
         return "No data found for currency " + currency;
     }
 
-    private boolean isDateValid() {
-        try {
-            Document document = Util.getCashedDocument(propUtil.getProperties(CURRENCY_FILE_PATH));
-            if (document == null) {
-                return false;
-            }
-            String dateInDoc = document.getElementsByTagName("DailyExRates")
-                    .item(0).getAttributes().getNamedItem("Date").getNodeValue();
-            if (dateInDoc.equals(dateToString(new Date()))) {
-                return true;
-            }
-        } catch (IOException
-                | ParserConfigurationException
-                | SAXException e) {
-            e.printStackTrace();
+    private boolean isDateValid() throws IOException, SAXException, ParserConfigurationException {
+        Document document = Util.getCashedDocument(propUtil.getProperties(CURRENCY_FILE_PATH));
+        if (document == null) {
+            return false;
+        }
+        String dateInDoc = document.getElementsByTagName("DailyExRates")
+                .item(0).getAttributes().getNamedItem("Date").getNodeValue();
+        if (dateInDoc.equals(dateToString(new Date()))) {
+            return true;
         }
         return false;
     }
 
     private String dateToString(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
-        System.out.println(format.format(date));
         return format.format(date);
     }
 }

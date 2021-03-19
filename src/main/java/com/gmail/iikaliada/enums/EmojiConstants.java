@@ -7,6 +7,7 @@ public enum EmojiConstants {
     DARTS_ANIM("\uD83C\uDFAF"),//"🎯"
     BASKET_ANIM("\uD83C\uDFC0"),//"🏀"
     FOOTBALL_ANIM("⚽"),//"⚽"
+    FOOTBALL("\u26BD"),//"⚽"
     CASINO_ANIM("\uD83C\uDFB0")//"🎰"
     ;
 

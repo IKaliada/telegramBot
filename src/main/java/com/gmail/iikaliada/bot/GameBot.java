@@ -2,10 +2,13 @@ package com.gmail.iikaliada.bot;
 
 import com.gmail.iikaliada.PropUtil;
 import com.gmail.iikaliada.enums.EmojiConstants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendDice;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
@@ -21,6 +24,7 @@ import static com.gmail.iikaliada.enums.EmojiConstants.*;
 public class GameBot extends TelegramLongPollingBot {
 
     private final PropUtil propUtil = PropUtil.getInstance();
+    private final Logger logger = LogManager.getLogger(GameBot.class);
 
     @Override
     public String getBotUsername() {
@@ -96,15 +100,17 @@ public class GameBot extends TelegramLongPollingBot {
                         addButton(DARTS_ANIM.label, PLAY_DARTS),
                         addButton(BASKET_ANIM.label, PLAY_BASKET)),
                 addListButtons(
-                        addButton(FOOTBALL_ANIM.label, PLAY_FOOTBALL),
+                        addButton(FOOTBALL.label, PLAY_FOOTBALL),
                         addButton(CASINO_ANIM.label, PLAY_CASINO))
         );
         inlineKeyboardMarkup.setKeyboard(list);
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -114,9 +120,11 @@ public class GameBot extends TelegramLongPollingBot {
         forwardMessage.setFromChatId(update.getMessage().getFrom().getId().toString());
         forwardMessage.setMessageId(update.getMessage().getMessageId());
         try {
-            execute(forwardMessage);
+            logger.info("Message " + forwardMessage.getMessageId() + " was sent");
+            Message execute = execute(forwardMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -125,9 +133,11 @@ public class GameBot extends TelegramLongPollingBot {
         sendDice.setChatId(chatId);
         sendDice.setEmoji(game.label);
         try {
-            execute(sendDice);
+            logger.info("Message '" + sendDice.getEmoji() + "' was sent");
+            Message execute = execute(sendDice);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -144,9 +154,11 @@ public class GameBot extends TelegramLongPollingBot {
         rowsLine.setKeyboard(listButton);
         sendMessage.setReplyMarkup(rowsLine);
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -163,9 +175,11 @@ public class GameBot extends TelegramLongPollingBot {
         inlineKeyboardMarkup.setKeyboard(keyButtons);
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -178,9 +192,11 @@ public class GameBot extends TelegramLongPollingBot {
         sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId().toString());
         sendMessage.setReplyMarkup(getBackButton());
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -190,9 +206,11 @@ public class GameBot extends TelegramLongPollingBot {
         sendMessage.setText("Today is a good day to do something stupid");
         sendMessage.setReplyMarkup(getBackButton());
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -207,20 +225,11 @@ public class GameBot extends TelegramLongPollingBot {
         inlineKeyboardMarkup.setKeyboard(buttons);
         sendMessage.setReplyMarkup(inlineKeyboardMarkup);
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void getMessages(Update update) {
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId().toString());
-        sendMessage.setText("messages");
-        try {
-            execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
@@ -229,16 +238,20 @@ public class GameBot extends TelegramLongPollingBot {
         sendMessage.setChatId(propUtil.getProperties(CHAT_ID));
         sendMessage.setText(update.getCallbackQuery().getMessage().getText());
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
         sendMessage.setChatId(update.getCallbackQuery().getMessage().getChatId().toString());
         sendMessage.setText("Thank you!");
         try {
-            execute(sendMessage);
+            logger.info("Message '" + sendMessage.getText() + "' was sent");
+            Message execute = execute(sendMessage);
+            logger.info("Message " + execute.getMessageId() + " was delivered");
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 

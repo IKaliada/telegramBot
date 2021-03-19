@@ -1,7 +1,6 @@
 package com.gmail.iikaliada.handler;
 
 import com.gmail.iikaliada.PropUtil;
-import com.gmail.iikaliada.constant.Constant;
 import com.gmail.iikaliada.util.Util;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
@@ -40,7 +39,6 @@ public class KeyboardHandler {
                 keyboard.add(row);
                 row = new KeyboardRow();
             }
-            System.out.print(curr + " ");
         }
         keyboard.add(row);
         // Set the keyboard to the markup

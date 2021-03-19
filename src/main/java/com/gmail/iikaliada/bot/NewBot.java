@@ -2,6 +2,8 @@ package com.gmail.iikaliada.bot;
 
 import com.gmail.iikaliada.PropUtil;
 import com.gmail.iikaliada.handler.CleanerHandler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendDocument;
@@ -21,6 +23,7 @@ import static com.gmail.iikaliada.constant.Constant.*;
 public class NewBot extends TelegramLongPollingBot {
     private final PropUtil propUtil = PropUtil.getInstance();
     private Map<String, Message> messages = new HashMap<>();
+    private Logger logger = LogManager.getLogger(NewBot.class);
 
     @Override
     public String getBotUsername() {
@@ -54,22 +57,23 @@ public class NewBot extends TelegramLongPollingBot {
             try {
                 replyToBot(inputMessage);
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         } else if (Long.valueOf(inputMessage.getFrom().getId().toString()).equals(inputMessage.getChat().getId())) {
             ForwardMessage sendMessage = new ForwardMessage();
             sendMessage.setChatId(receiverId);
             sendMessage.setMessageId(inputMessage.getMessageId());
             sendMessage.setFromChatId(inputMessage.getFrom().getId().toString());
-            System.out.println(inputMessage.getMessageId() + " " + inputMessage.getText());
             try {
                 Message execute = execute(sendMessage);
                 messages.put(execute.getMessageId().toString(), execute);
-                System.out.println("Message '" + inputMessage.getText()
+                logger.info("Message '" + inputMessage.getText()
                         + "' was sent to " + execute.getChat().getTitle());
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
+        } else {
+            messages.put(inputMessage.getMessageId().toString(), inputMessage);
         }
     }
 
@@ -85,27 +89,27 @@ public class NewBot extends TelegramLongPollingBot {
         try {
             execute(sendDocument);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
         }
     }
 
     private void clearMessages(Message input) {
         messages.put(input.getMessageId().toString(), input);
-        System.out.println(input.getMessageId() + input.getText());
+        logger.info(messages);
         Iterator<String> it = messages.keySet().iterator();
         while (it.hasNext()) {
             String message = it.next();
-            System.out.println(message);
+            logger.info("Trying to clear: MessageId=" + message);
             CleanerHandler cleanerHandler = new CleanerHandler(input);
             DeleteMessage clear = cleanerHandler.clear(message);
             try {
                 Boolean execute = execute(clear);
                 if (execute) {
                     it.remove();
-                    System.out.println("Message " + message + " was cleared");
+                    logger.info("Message " + message + " was cleared");
                 }
             } catch (TelegramApiException e) {
-                e.printStackTrace();
+                logger.error(e.getMessage(), e);
             }
         }
     }
@@ -115,8 +119,9 @@ public class NewBot extends TelegramLongPollingBot {
         sendMessage.setText(message.getText());
         sendMessage.setChatId(message.getFrom().getId().toString());
         Message execute = execute(sendMessage);
-        System.out.println("Message '" + execute.getText()
-                + "' was sent to " + execute.getChat().getTitle());
-        messages.put(execute.getMessageId().toString(), execute);
+        logger.info("Message '" + execute.getText()
+                + "' was sent to " + message.getFrom().getUserName());
+        messages.put(message.getMessageId().toString(), message);
+        messages.put(message.getReplyToMessage().getMessageId().toString(), message.getReplyToMessage());
     }
 }
