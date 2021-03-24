@@ -1,6 +1,5 @@
 package com.gmail.iikaliada.util;
 
-import com.gmail.iikaliada.PropUtil;
 import com.gmail.iikaliada.constant.Constant;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;

@@ -1,6 +1,6 @@
 package com.gmail.iikaliada.handler;
 
-import com.gmail.iikaliada.PropUtil;
+import com.gmail.iikaliada.util.PropUtil;
 import com.gmail.iikaliada.util.Util;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;

@@ -1,6 +1,6 @@
 package com.gmail.iikaliada.handler;
 
-import com.gmail.iikaliada.PropUtil;
+import com.gmail.iikaliada.util.PropUtil;
 import com.gmail.iikaliada.util.Util;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;

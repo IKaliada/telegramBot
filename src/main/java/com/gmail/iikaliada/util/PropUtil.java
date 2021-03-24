@@ -1,4 +1,4 @@
-package com.gmail.iikaliada;
+package com.gmail.iikaliada.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,6 +34,4 @@ public class PropUtil {
     public String getProperties(String name) {
         return properties.getProperty(name);
     }
-
-
 }

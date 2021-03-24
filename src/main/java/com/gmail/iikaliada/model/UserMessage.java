@@ -1,8 +1,9 @@
 package com.gmail.iikaliada.model;
 
-public class Messages {
+public class UserMessage {
     private String id;
     private String message;
+    private int userId;
 
     public String getId() {
         return id;
@@ -10,6 +11,14 @@ public class Messages {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getMessage() {
@@ -22,9 +31,10 @@ public class Messages {
 
     @Override
     public String toString() {
-        return "Message{" +
+        return "Messages{" +
                 "id='" + id + '\'' +
                 ", message='" + message + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,7 @@
 package com.gmail.iikaliada.bot;
 
-import com.gmail.iikaliada.PropUtil;
 import com.gmail.iikaliada.handler.CleanerHandler;
+import com.gmail.iikaliada.util.PropUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;

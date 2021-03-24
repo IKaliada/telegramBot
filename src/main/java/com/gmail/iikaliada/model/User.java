@@ -5,8 +5,9 @@ public class User {
     private String name;
     private String lastname;
     private String username;
-    private String messageId;
     private String userId;
+    private int roleId;
+    private int kicked;
 
     public int getId() {
         return id;
@@ -40,14 +41,6 @@ public class User {
         this.username = username;
     }
 
-    public String getMessageId() {
-        return messageId;
-    }
-
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
     public String getUserId() {
         return userId;
     }
@@ -56,15 +49,31 @@ public class User {
         this.userId = userId;
     }
 
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public int getKicked() {
+        return kicked;
+    }
+
+    public void setKicked(int kicked) {
+        this.kicked = kicked;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
                 ", username='" + username + '\'' +
-                ", messageId='" + messageId + '\'' +
                 ", userId='" + userId + '\'' +
+                ", roleId=" + roleId + '\'' +
+                ", kicked=" + kicked +
                 '}';
     }
 }

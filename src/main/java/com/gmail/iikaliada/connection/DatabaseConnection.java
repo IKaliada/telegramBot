@@ -1,6 +1,6 @@
 package com.gmail.iikaliada.connection;
 
-import com.gmail.iikaliada.PropUtil;
+import com.gmail.iikaliada.util.PropUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
